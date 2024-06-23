@@ -401,7 +401,7 @@ app.delete("/api/mineral-revenues/:year/:month/:district", async (req, res) => {
         message: `Mineral revenue data for year ${year}, month ${month}, and district ${district} not found or no deletes applied.`,
       });
     } else {
-      res.json({ success: true, message: `Mineral revenue data deleted.` });
+      res.json({ success: true, message: `Mineral revenue data  deleted.` });
     }
   } catch (error) {
     console.error("Error deleting mineral revenue data:", error);
