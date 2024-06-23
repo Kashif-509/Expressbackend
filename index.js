@@ -7,18 +7,18 @@ require("dotenv").config();
 const app = express();
 app.use(cors());
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5432;
 
 // Middleware setup
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const sequelize = new Sequelize({
   dialect: "postgres",
-  host: process.env.DB_HOST || "localhost",
-  username: process.env.DB_USERNAME || "Muhammad Kashif", // Replace with your PostgreSQL username
-  password: process.env.DB_PASSWORD || "K@shif11", // Replace with your PostgreSQL password
-  database: process.env.DB_NAME || "mineralrevenue", // Replace with your PostgreSQL database name
-  port: process.env.DB_PORT || 5432, // PostgreSQL default port
+  host: process.env.DB_HOST,
+  username: process.env.DB_USERNAME, // Replace with your PostgreSQL username
+  password: process.env.DB_PASSWORD, // Replace with your PostgreSQL password
+  database: process.env.DB_NAME, // Replace with your PostgreSQL database name
+  port: process.env.DB_PORT, // PostgreSQL default port
   logging: false,
 });
 
