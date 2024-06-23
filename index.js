@@ -261,7 +261,7 @@ app.get("/api/mineral-revenues/:year/:month/:district", async (req, res) => {
     if (!result) {
       res.status(404).json({
         success: false,
-        message: `Mineral revenue data for year ${year}, month ${month}, and district ${district} not found.`,
+        message: `Mineral revenue data for year ${year}, month ${month}, and district is ${district} not found.`,
       });
     } else {
       res.json({ success: true, result });
