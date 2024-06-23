@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mineral Revenue Form</title>
+    <!-- Tailwind CSS CDN (replace with local file if needed) -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.7/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-100 p-8">
+    <div class="max-w-lg mx-auto bg-white p-6 rounded shadow-md">
+      <h1 class="text-2xl font-semibold mb-4">Mineral Revenue Form</h1>
+      <form id="mineralRevenueForm" class="space-y-4">
+        <div>
+          <label for="year" class="block font-medium">Year</label>
+          <select
+            id="year"
+            name="year"
+            class="form-select mt-1 block w-full"
+            required
+          >
+            <option value="">Select a year...</option>
+            <!-- JavaScript to generate options for years from 2000 to 2050 -->
+            <script>
+              const yearSelect = document.getElementById("year");
+              const currentYear = new Date().getFullYear();
+
+              for (let year = 2000; year <= 2050; year++) {
+                const option = document.createElement("option");
+                option.value = year;
+                option.textContent = year;
+                yearSelect.appendChild(option);
+              }
+            </script>
+          </select>
+        </div>
+        <div>
+          <label for="month" class="block font-medium">Month</label>
+          <select
+            id="month"
+            name="month"
+            class="form-select mt-1 block w-full"
+            required
+          >
+            <option value="">Select a month...</option>
+            <option value="January">January</option>
+            <option value="February">February</option>
+            <option value="March">March</option>
+            <option value="April">April</option>
+            <option value="May">May</option>
+            <option value="June-July">June-July</option>
+            <option value="August">August</option>
+            <option value="September">September</option>
+            <option value="October">October</option>
+            <option value="November">November</option>
+            <option value="December">December</option>
+          </select>
+        </div>
+        <div>
+          <label for="district" class="block font-medium">District</label>
+          <select
+            id="district"
+            name="district"
+            class="form-select mt-1 block w-full"
+            required
+          >
+            <option value="">Select a district...</option>
+            <!-- Options generated dynamically or statically -->
+            <option value="Attock">Attock</option>
+            <option value="Chakwal">Chakwal</option>
+            <option value="DG Khan">DG Khan</option>
+            <option value="Jhelum">Jhelum</option>
+            <option value="Khushab">Khushab</option>
+            <option value="Mianwali">Mianwali</option>
+            <option value="Rawalpindi">Rawalpindi</option>
+            <option value="Rahim Yar Khan">Rahim Yar Khan</option>
+          </select>
+        </div>
+
+        <!-- Mineral fields with dropdown and value in metric ton -->
+        <div>
+          <label for="mineral" class="block font-medium">Mineral</label>
+          <select
+            id="mineral"
+            name="mineral"
+            class="form-select mt-1 block w-full"
+            required
+          >
+            <option value="">Select a mineral...</option>
+            <option value="Argillaceous Clay (LSM)">
+              Argillaceous Clay (LSM)
+            </option>
+            <option value="Bauxite">Bauxite</option>
+            <option value="Bentonite">Bentonite</option>
+            <option value="Brine (LSM)">Brine (LSM)</option>
+            <option value="Coal">Coal</option>
+            <option value="Coal (LSM)">Coal (LSM)</option>
+            <option value="China Clay">China Clay</option>
+            <option value="Dolomite">Dolomite</option>
+            <option value="Fireclay">Fireclay</option>
+            <option value="Fuller Earth">Fuller Earth</option>
+            <option value="Gypsum">Gypsum</option>
+            <option value="Gypsum LSM">Gypsum LSM</option>
+            <option value="Iron Ore">Iron Ore</option>
+            <option value="Limestone">Limestone</option>
+            <option value="Limestone LSM">Limestone LSM</option>
+            <option value="Latrite">Latrite</option>
+            <option value="Marble">Marble</option>
+            <option value="Ochers">Ochers</option>
+            <option value="RockSalt">RockSalt</option>
+            <option value="RockSalt (LSM)">RockSalt (LSM)</option>
+            <option value="Silica Sand">Silica Sand</option>
+            <option value="Silica Sand (LSM)">Silica Sand (LSM)</option>
+            <option value="Ordinary Salt">Ordinary Salt</option>
+            <option value="Lake Salt">Lake Salt</option>
+            <option value="Sand Gravel (LSM)">Sand Gravel (LSM)</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="value" class="block font-medium"
+            >Value (in metric ton)</label
+          >
+          <input
+            type="number"
+            id="value"
+            name="value"
+            class="form-input mt-1 block w-full"
+            placeholder="Enter value in metric ton..."
+            required
+          />
+        </div>
+
+        <div>
+          <button
+            type="submit"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      document
+        .getElementById("mineralRevenueForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          const formData = new FormData(this);
+
+          try {
+            const response = await fetch("/api/mineral-revenues", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(Object.fromEntries(formData)), // Convert FormData to JSON object
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+              throw new Error(data.message);
+            }
+
+            // Reset the form after successful submission
+            this.reset();
+
+            // Optionally show a success message or redirect to another page
+            alert("Mineral revenue data submitted successfully!");
+          } catch (error) {
+            console.error("Error submitting form:", error);
+            // Optionally display an error message to the user
+            alert(
+              "Failed to submit mineral revenue data. Please try again later."
+            );
+          }
+        });
+    </script>
+  </body>
+</html>
